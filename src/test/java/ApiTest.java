@@ -6,6 +6,7 @@ import api.resource.EmployeeResource;
 import org.junit.runners.MethodSorters;
 
 import static java.net.HttpURLConnection.*;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 @FixMethodOrder(MethodSorters.JVM)
@@ -20,8 +21,8 @@ public class ApiTest {
 
         EmployeeResource.putEmployeeRequest(employee)
                 .assertThat()
-                .statusCode(HTTP_BAD_REQUEST)
-                .body("message", containsString("Validation failed"));
+                    .statusCode(HTTP_BAD_REQUEST)
+                    .body("message", containsString("Validation failed"));
 
         employee.setEducation("College");
 
@@ -56,16 +57,13 @@ public class ApiTest {
                         "School")
         };
 
-        EmployeeResource.postEmployeeListRequest(employees)
+        Employee [] responseEmployees = EmployeeResource.postEmployeeListRequest(employees)
                 .assertThat()
                     .statusCode(HTTP_OK)
                     .header("Content-Type", equalTo("application/json;charset=UTF-8"))
-                    .body("size()", equalTo(3))
-                    .body("id", everyItem(notNullValue()))
-                    .body("name", everyItem(notNullValue()))
-                    .body("passportNumber", everyItem(notNullValue()))
-                    .body("education", everyItem(notNullValue()))
-                    .body("id", contains(104, 105, 106));
+                .extract().response().as(Employee[].class);
+
+        assertThat(employees, equalTo(responseEmployees));
     }
 
     @Test
