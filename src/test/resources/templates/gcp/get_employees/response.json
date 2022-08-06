@@ -1,0 +1,20 @@
+[
+  {
+    "id": 104,
+    "name": "Max",
+    "passportNumber": "MX456798",
+    "education": "High"
+  },
+  {
+    "id": 105,
+    "name": "John",
+    "passportNumber": "JN789123",
+    "education": "School"
+  },
+  {
+    "id": 106,
+    "name": "Alla",
+    "passportNumber": "AL456123",
+    "education": "School"
+  }
+]
